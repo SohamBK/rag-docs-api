@@ -8,6 +8,10 @@ class Settings(BaseSettings):
     #Database settings
     DATABASE_URL: str
 
+    # Gemini LLM settings
+    GEMINI_API_KEY: str
+    GEMINI_API_URL: str
+
     class Config:
         env_file = ".env"
 

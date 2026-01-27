@@ -23,8 +23,8 @@ services:
     container_name: fastapi_rag_api
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
-      - .:/app # ✅ bind mount for hot reload
-      - /app/.venv # ✅ use container's virtual environment
+      - ./app:/app/app
+      - hf_cache:/root/.cache/huggingface
     ports:
       - "8000:8000"
     env_file:
@@ -33,6 +33,6 @@ services:
       - db
     restart: unless-stopped
 
-# ---- Named volumes (REQUIRED) ----
 volumes:
   pgdata:
+  hf_cache:
