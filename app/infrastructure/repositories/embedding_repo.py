@@ -1,6 +1,7 @@
 from typing import List
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql import text
 
 from app.infrastructure.db.models.embedding import Embedding
 
@@ -30,15 +31,16 @@ class EmbeddingRepository:
         db.add_all(records)
         await db.commit()
 
+
     @staticmethod
     async def similarity_search(
-        db: AsyncSession,
-        query_embedding: List[float],
+        db,
+        query_embedding: list[float],
         limit: int = 5,
-    ) -> List[Embedding]:
+    ):
         stmt = (
             select(Embedding)
-            .order_by(Embedding.embedding.cosine_distance(query_embedding))
+            .order_by(Embedding.embedding.op("<=>")(query_embedding))
             .limit(limit)
         )
 

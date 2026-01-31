@@ -1,24 +1,17 @@
-from typing import List
+SYSTEM_PROMPT = """
+You are a helpful AI assistant.
+Answer the user's question using ONLY the provided context.
+If the answer is not present in the context, say:
+"I don't have enough information to answer this question."
+"""
 
-
-def build_rag_prompt(question: str, contexts: List[str]) -> str:
-    """
-    Builds a strict RAG prompt to minimize hallucinations.
-    """
-
-    context_block = "\n\n".join(contexts)
-
+def build_rag_prompt(context: str, question: str) -> str:
     return f"""
-You are a helpful backend engineering assistant.
-
-Use ONLY the context below to answer the question.
-If the answer is not present, say: "I don't know based on the provided context."
-
 Context:
-{context_block}
+{context}
 
 Question:
 {question}
 
-Answer concisely and clearly:
-""".strip()
+Answer:
+"""
