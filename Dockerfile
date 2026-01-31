@@ -14,6 +14,12 @@ ENV UV_PROJECT_ENVIRONMENT=/app/.venv
 # Copy only dependency files first to leverage Docker cache
 COPY pyproject.toml uv.lock ./
 
+# ✅ Create venv explicitly
+RUN uv venv
+
+# ✅ Install CPU-only torch into the venv
+RUN uv pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
+
 # Install dependencies into the venv (no-install-project skips copying app code yet)
 RUN uv sync --frozen --no-install-project --no-dev
 

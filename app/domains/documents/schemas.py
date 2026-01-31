@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional
+from uuid import UUID
 
 class DocumentCreate(BaseModel):
     source: str = Field(..., description="Document source or filename")
@@ -9,3 +10,4 @@ class DocumentCreate(BaseModel):
 class DocumentChunk(BaseModel):
     content: str
     index: int
+    document_id: Optional[UUID] = None
